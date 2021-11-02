@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<script src="js/jquery-3.3.1.js"></script>
+
+<!--头部-->
+<!-- navbar-->
+<header class="header" th:fragment="topbar">
+    <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i
+            class="fas fa-align-left"></i></a>
+        <a href="/go.html" class="navbar-brand font-weight-bold text-uppercase text-base">lsyy社区论坛</a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+            <li class="nav-item">
+                <form id="searchForm" class="ml-auto d-none d-lg-block">
+                    <div class="form-group position-relative mb-0">
+                        <button type="submit" style="top: -3px; left: 0;"
+                                class="position-absolute bg-white border-0 p-0"><i
+                                class="o-search-magnify-1 text-gray text-lg"></i></button>
+                        <input type="search" placeholder="搜索 ..."
+                               class="form-control form-control-sm border-0 no-shadow pl-4">
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item dropdown mr-3" th:if="${loginUser!=null}"><a id="notifications"
+                                                                             href="http://example.com"
+                                                                             data-toggle="dropdown"
+                                                                             aria-haspopup="true" aria-expanded="false"
+                                                                             class="nav-link dropdown-toggle text-gray-400 px-1"><i
+                    class="fa fa-bell"></i><span class="notification-icon"></span></a>
+                <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+                    <div class="d-flex align-items-center">
+                        <div class="icon icon-sm bg-violet text-white"><i class="fab fa-twitter"></i></div>
+                        <div class="text ml-2">
+                            <p class="mb-0">你又有x粉丝</p>
+                        </div>
+                    </div>
+                </a>
+                    <a href="#" class="dropdown-item">
+                        <div class="d-flex align-items-center">
+                            <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                            <div class="text ml-2">
+                                <p class="mb-0">你有x条回复</p>
+                            </div>
+                        </div>
+                    </a>
+
+
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-center"><small
+                            class="font-weight-bold headings-font-family text-uppercase">查看全部通知</small></a>
+                </div>
+            </li>
+            <li class="nav-item dropdown ml-auto" th:if="${loginUser!=null}">
+                <a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false" class="nav-link dropdown-toggle">
+                    <img th:src="${loginUser.headerUrl}" alt="Jason Doe" style="max-width: 2.5rem;"
+                         class="img-fluid rounded-circle shadow">
+                </a>
+                <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong
+                        class="d-block text-uppercase headings-font-family" th:utext="${loginUser.username}">
+
+                </strong>><small>
+                    个人中心
+                </small></a>
+
+                    <div class="dropdown-divider"></div>
+                    <a href="/user/setting" class="dropdown-item">账号设置</a><a href="#" class="dropdown-item">活动记录</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/cancel" class="dropdown-item">退出登录</a>
+                </div>
+            </li>
+
+        </ul>
+    </nav>
+</header>
+
+
+<!--侧边-->
+<div id="sidebar" class="sidebar py-3" th:fragment="sidebar">
+    <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">主菜单</div>
+    <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-list-item"><a href="/go.html"
+                                         th:class="${active=='index.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>首页</span></a></li>
+<!--        <li class="sidebar-list-item"><a href="charts.html"-->
+<!--                                         th:class="${active=='charts.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i-->
+<!--                class="o-sales-up-1 mr-3 text-gray"></i><span>图表</span></a></li>-->
+<!--        <li class="sidebar-list-item"><a href="forms.html"-->
+<!--                                         th:class="${active=='forms.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i-->
+<!--                class="o-table-content-1 mr-3 text-gray"></i><span>表格</span></a></li>-->
+<!--        <li class="sidebar-list-item"><a href="tables.html"-->
+<!--                                         th:class="${active=='tables.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i-->
+<!--                class="o-survey-1 mr-3 text-gray"></i><span>表单</span></a></li>-->
+<!--        <li class="sidebar-list-item"><a href="#" data-toggle="collapse"-->
+<!--                                         data-target="#pages" aria-expanded="false"-->
+<!--                                         aria-controls="pages"-->
+<!--                                         class="sidebar-link text-muted"><i-->
+<!--                class="o-wireframe-1 mr-3 text-gray"></i><span>页面</span></a>-->
+<!--            <div id="pages" class="collapse">-->
+<!--                <ul class="sidebar-menu list-unstyled border-left border-primary border-thick">-->
+<!--                    <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">第一页</a></li>-->
+<!--                    <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">第二页</a></li>-->
+<!--                    <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted pl-lg-5">第三页</a>-->
+<!--                    </li>-->
+
+<!--                </ul>-->
+<!--            </div>-->
+        </li>
+        <li class="sidebar-list-item" th:if="${loginUser==null}"><a href="login.html" class="sidebar-link text-muted">
+            <i class="o-exit-1 mr-3 text-gray"></i><span>登录</span></a>
+        </li>
+    </ul>
+    <!--    <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">EXTRAS</div>-->
+    <!--    <ul class="sidebar-menu list-unstyled">-->
+    <!--        <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-database-1 mr-3 text-gray"></i><span>Demo</span></a></li>-->
+    <!--        <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-imac-screen-1 mr-3 text-gray"></i><span>Demo</span></a></li>-->
+    <!--        <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-paperwork-1 mr-3 text-gray"></i><span>Demo</span></a></li>-->
+    <!--        <li class="sidebar-list-item"><a href="#" class="sidebar-link text-muted"><i class="o-wireframe-1 mr-3 text-gray"></i><span>Demo</span></a></li>-->
+    <!--    </ul>-->
+</div>
+
+<!--底部-->
+<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100" th:fragment="footbar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-right text-gray-400">
+                <p class="mb-0" style="float: left">Copyright &copy; 2021.Company name All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!--特殊侧边-->
+<div id="specialsidebar" class="sidebar py-3" th:fragment="specialsidebar">
+    <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">主菜单</div>
+    <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-list-item" th:if="${active=='discuss-detail.html'}"><a href="#"
+                                         th:class="${active=='discuss-detail.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>帖子详情</span></a></li>
+        <li class="sidebar-list-item" th:if="${active=='setting.html'}"><a href="#"
+                                         th:class="${active=='setting.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>账号设置</span></a></li>
+        <li class="sidebar-list-item"><a href="/go.html"
+                                         th:class="${active=='index.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>首页</span></a></li>
+
+
+    </ul>
+</div>
+
+
+
+
+
+</html>
