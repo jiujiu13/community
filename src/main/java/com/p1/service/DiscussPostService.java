@@ -48,4 +48,24 @@ public class DiscussPostService {
         return discussPostDao.selectDiscussPostById(id);
     }
 
+
+
+    //增加帖子评论数
+    public int updateCommentCount(int id, int commentCount) {
+        return discussPostDao.updateCommentCount(id, commentCount);
+    }
+
+    public int updateType(int id, int type) {
+        return discussPostDao.updateType(id, type);
+    }
+
+    public int updateStatus(int id, int status) {
+        return discussPostDao.updateStatus(id, status);
+    }
+
+    public int updateScore(int id, double score) {
+        return discussPostDao.updateScore(id, score);
+    }
+
+
 }

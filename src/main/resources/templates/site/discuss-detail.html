@@ -1,299 +1,294 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>lsyy论坛-帖子详情</title>
-	<meta name="description" content="">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="robots" content="all,follow">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>lsyy论坛-帖子详情</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
 
-	<!-- Bootstrap CSS-->
-	<link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
-	<!-- Font Awesome CSS-->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-		  integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<!-- Google fonts - Popppins for copy-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
-	<!-- orion icons-->
-	<link rel="stylesheet" th:href="@{/css/orionicons.css}">
-	<!-- theme stylesheet-->
-	<link rel="stylesheet"th:href="@{/css/style.default.css}" id="theme-stylesheet">
-	<!-- Custom stylesheet - for your changes-->
-	<link rel="stylesheet"th:href="@{/css/custom.css}">
-	<!-- Favicon-->
-	<link rel="shortcut icon" th:href="@{/img/favicon.png?3}">
-<!--	<link rel="stylesheet" th:href="@{/css/global.css}" />-->
-	<link rel="stylesheet" th:href="@{/css/discuss-detail.css}" />
-	<!-- Tweaks for older IEs--><!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<script th:src="@{/js/jquery-3.3.1.js}"></script>
-	<![endif]-->
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!-- Google fonts - Popppins for copy-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
+    <!-- orion icons-->
+    <link rel="stylesheet" th:href="@{/css/orionicons.css}">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" th:href="@{/css/style.default.css}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" th:href="@{/img/favicon.png?3}">
+    <!--	<link rel="stylesheet" th:href="@{/css/global.css}" />-->
+    <link rel="stylesheet" th:href="@{/css/discuss-detail.css}"/>
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script th:src="@{/js/jquery-3.3.1.js}"></script>
+    <![endif]-->
 </head>
 <body>
 <!-- navbar-->
 <!-- 引头部-->
 <div th:replace="~{commons/commons::topbar}"></div>
 <div class="d-flex align-items-stretch">
-	<!--      引左边-->
-	<div th:replace="~{commons/commons::specialsidebar(active='discuss-detail.html')}"></div>
-	<!--      引做左边结束-->
-	<div class="page-holder w-100 d-flex flex-wrap">
-		<div class="container-fluid px-xl-5">
-			<section class="py-5">
-				<div class="row">
-					<div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
-						<div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
-							<div class="flex-grow-1 d-flex align-items-center">
-								<div class="dot mr-3 bg-blue"></div>
-								<div class="text">
-									<a class="mb-0" href="#" style="color: blue">最新发布</a><br><span class="text-gray">共xxx条</span>
-								</div>
-							</div>
-							<div class="icon text-white bg-blue"><i class="fa fa-dolly-flatbed"></i></div>
-						</div>
+    <!--      引左边-->
+    <div th:replace="~{commons/commons::specialsidebar(active='discuss-detail.html')}"></div>
+    <!--      引做左边结束-->
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+            <section class="py-5">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                            <div class="flex-grow-1 d-flex align-items-center">
+                                <div class="dot mr-3 bg-blue"></div>
+                                <div class="text">
+                                    <a class="mb-0" href="#" style="color: blue">最新发布</a><br><span class="text-gray">共xxx条</span>
+                                </div>
+                            </div>
+                            <div class="icon text-white bg-blue"><i class="fa fa-dolly-flatbed"></i></div>
+                        </div>
 
-					</div>
-					<div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
-						<div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
-							<div class="flex-grow-1 d-flex align-items-center">
-								<div class="dot mr-3 bg-red"></div>
-								<div class="text">
-									<a class="mb-0" href="#" style="color:red;">最热发布</a><br><span class="text-gray">共xxx条</span>
-								</div>
-							</div>
-							<div class="icon text-white bg-red"><i class="fas fa-receipt"></i></div>
-						</div>
-					</div>
-				</div>
-			</section>
-			<section>
-				<div class="row mb-4" style="width: 2700px">
-					<div class="col-lg-7 mb-4 mb-lg-0">
-						<div class="card">
-							<div class="card-header">
-								<h2 class="h6 text-uppercase mb-0"></h2>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
+                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                            <div class="flex-grow-1 d-flex align-items-center">
+                                <div class="dot mr-3 bg-red"></div>
+                                <div class="text">
+                                    <a class="mb-0" href="#" style="color:red;">最热发布</a><br><span class="text-gray">共xxx条</span>
+                                </div>
+                            </div>
+                            <div class="icon text-white bg-red"><i class="fas fa-receipt"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="row mb-4" style="width: 2700px">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="h6 text-uppercase mb-0"></h2>
 
-							</div>
+                            </div>
 
-							<div class="container" style="padding-top: 50px">
-								<!-- 标题 -->
-								<h6 class="mb-4" >
-									<img src="http://static.nowcoder.com/images/img/icons/ico-discuss.png"/>
-									<span th:utext="${post.title}">备战春招，面试刷题跟他复习，一个月全搞定！</span>
-									<div class="float-right">
-										<input type="hidden" id="postId" >
-										<button type="button" class="btn btn-danger btn-sm" id="topBtn"
-												>置顶</button>
-										<button type="button" class="btn btn-danger btn-sm" id="wonderfulBtn"
-												 >加精</button>
-										<button type="button" class="btn btn-danger btn-sm" id="deleteBtn"
-												 >删除</button>
-									</div>
-								</h6>
-								<!-- 作者 -->
-								<div class="media pb-3 border-bottom">
-									<a href="profile.html">
-										<img th:src="${user.headerUrl}" height="50px" width="50px" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
-									</a>
-									<div class="media-body">
-										<div class="mt-0 text-warning" th:utext="${user.username}">寒江雪</div>
-										<div class="text-muted mt-3">
-											发布于 <b th:text="${#dates.format(post.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</b>
-											<ul class="d-inline float-right">
-												<li class="d-inline ml-2">
-													<a href="javascript:;"  class="text-primary">
-														<b >赞</b> <i >11</i>
-													</a>
-												</li>
-												<li class="d-inline ml-2">|</li>
-												<li class="d-inline ml-2"><a href="#replyform" class="text-primary">回帖 <i th:text="${post.commentCount}">7</i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<!-- 正文 -->
-								<div class="mt-4 mb-3 content" th:utext="${post.content}">
-									金三银四的金三已经到了，你还沉浸在过年的喜悦中吗？
-									如果是，那我要让你清醒一下了：目前大部分公司已经开启了内推，正式网申也将在3月份陆续开始，金三银四，春招的求职黄金时期已经来啦！！！
-									再不准备，作为19应届生的你可能就找不到工作了。。。作为20届实习生的你可能就找不到实习了。。。
-									现阶段时间紧，任务重，能做到短时间内快速提升的也就只有算法了，
-									那么算法要怎么复习？重点在哪里？常见笔试面试算法题型和解题思路以及最优代码是怎样的？
-									跟左程云老师学算法，不仅能解决以上所有问题，还能在短时间内得到最大程度的提升！！！
-								</div>
-							</div>
+                            <div class="container" style="padding-top: 50px">
+                                <!-- 标题 -->
+                                <h6 class="mb-4">
+                                    <img src="http://static.nowcoder.com/images/img/icons/ico-discuss.png"/>
+                                    <span th:utext="${post.title}">备战春招，面试刷题跟他复习，一个月全搞定！</span>
+                                    <div class="float-right">
+                                        <input type="hidden" id="postId">
+                                        <button type="button" class="btn btn-danger btn-sm" id="topBtn"
+                                        >置顶
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" id="wonderfulBtn"
+                                        >加精
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-sm" id="deleteBtn"
+                                        >删除
+                                        </button>
+                                    </div>
+                                </h6>
+                                <!-- 作者 -->
+                                <div class="media pb-3 border-bottom">
+                                    <a href="profile.html">
+                                        <img th:src="${user.headerUrl}" height="50px" width="50px"
+                                             class="align-self-start mr-4 rounded-circle user-header" alt="用户头像">
+                                    </a>
+                                    <div class="media-body">
+                                        <div class="mt-0 text-warning" th:utext="${user.username}">寒江雪</div>
+                                        <div class="text-muted mt-3">
+                                            发布于 <b th:text="${#dates.format(post.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15
+                                            15:32:18</b>
+                                            <ul class="d-inline float-right">
+                                                <li class="d-inline ml-2">
+                                                    <a href="javascript:;" class="text-primary">
+                                                        <b>赞</b> <i>11</i>
+                                                    </a>
+                                                </li>
+                                                <li class="d-inline ml-2">|</li>
+                                                <li class="d-inline ml-2"><a href="#replyform" class="text-primary">回帖
+                                                    <i th:text="${post.commentCount}">7</i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 正文 -->
+                                <div class="mt-4 mb-3 content" th:utext="${post.content}">
+                                    金三银四的金三已经到了，你还沉浸在过年的喜悦中吗？
+                                    如果是，那我要让你清醒一下了：目前大部分公司已经开启了内推，正式网申也将在3月份陆续开始，金三银四，春招的求职黄金时期已经来啦！！！
+                                    再不准备，作为19应届生的你可能就找不到工作了。。。作为20届实习生的你可能就找不到实习了。。。
+                                    现阶段时间紧，任务重，能做到短时间内快速提升的也就只有算法了，
+                                    那么算法要怎么复习？重点在哪里？常见笔试面试算法题型和解题思路以及最优代码是怎样的？
+                                    跟左程云老师学算法，不仅能解决以上所有问题，还能在短时间内得到最大程度的提升！！！
+                                </div>
+                            </div>
 
-							<!-- 回帖 -->
-							<div class="container mt-3">
-								<!-- 回帖数量 -->
-								<div class="row">
-									<div class="col-8">
-										<h6><b class="square"></b> <i th:text="${post.commentCount}">30</i>条回帖</h6>
-									</div>
-									<div class="col-4 text-right">
-										<a href="#replyform" class="btn btn-primary btn-sm">&nbsp;&nbsp;回&nbsp;&nbsp;帖&nbsp;&nbsp;</a>
-									</div>
-								</div>
-								<!-- 回帖列表 -->
-<!--								<ul class="list-unstyled mt-4">-->
-<!--									<li class="media pb-3 pt-3 mb-3 border-bottom" >-->
-<!--										<a href="profile.html">-->
-<!--											<img class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >-->
-<!--										</a>-->
-<!--										<div class="media-body">-->
-<!--											<div class="mt-0">-->
-<!--												<span class="font-size-12 text-success" >掉脑袋切切</span>-->
-<!--												<span class="badge badge-secondary float-right floor">-->
-<!--									<i >1</i>#-->
-<!--								</span>-->
-<!--											</div>-->
-<!--											<div class="mt-2" >-->
-<!--												这开课时间是不是有点晚啊。。。-->
-<!--											</div>-->
-<!--											<div class="mt-4 text-muted font-size-12">-->
-<!--												<span>发布于 <b >2019-04-15 15:32:18</b></span>-->
-<!--												<ul class="d-inline float-right">-->
-<!--													<li class="d-inline ml-2">-->
-<!--														<a href="javascript:;"  class="text-primary">-->
-<!--															<b >赞</b>(<i >1</i>)-->
-<!--														</a>-->
-<!--													</li>-->
-<!--													<li class="d-inline ml-2">|</li>-->
-<!--													<li class="d-inline ml-2"><a href="#" class="text-primary">回复(<i >2</i>)</a></li>-->
-<!--												</ul>-->
-<!--											</div>-->
-<!--											&lt;!&ndash; 回复列表 &ndash;&gt;-->
-<!--											<ul class="list-unstyled mt-4 bg-gray p-3 font-size-12 text-muted">-->
+                            <!-- 回帖 -->
+                            <div class="container mt-3">
+                                <!-- 回帖数量 -->
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h6><b class="square"></b> <i th:text="${post.commentCount}">30</i>条回帖</h6>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        <a href="#replyform" class="btn btn-primary btn-sm">&nbsp;&nbsp;回&nbsp;&nbsp;帖&nbsp;&nbsp;</a>
+                                    </div>
+                                </div>
+                                <!-- 回帖列表 -->
+                                <ul class="list-unstyled mt-4">
+                                    <li class="media pb-3 pt-3 mb-3 border-bottom" th:each="cvo:${comments}">
+                                        <a href="profile.html">
+                                            <img th:src="${cvo.user.headerUrl}" width="30px" height="30px"
+                                                 class="align-self-start mr-4 rounded-circle user-header" alt="用户头像">
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="mt-0">
+                                                <span class="font-size-12 text-success" th:utext="${cvo.user.username}">掉脑袋切切</span>
+                                                <span class="badge badge-secondary float-right floor">
+									<i th:text="${page.offset + cvoStat.count}">1</i>#
+								</span>
+                                            </div>
+                                            <div class="mt-2" th:utext="${cvo.comment.content}">
+                                                这开课时间是不是有点晚啊。。。
+                                            </div>
+                                            <div class="mt-4 text-muted font-size-12">
+                                                <span>发布于 <b
+                                                        th:text="${#dates.format(cvo.comment.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</b></span>
+                                                <ul class="d-inline float-right">
+                                                    <li class="d-inline ml-2">
+                                                        <a href="javascript:;" class="text-primary">
+                                                            <b>赞</b>(<i>1</i>)
+                                                        </a>
+                                                    </li>
+                                                    <li class="d-inline ml-2">|</li>
+                                                    <li class="d-inline ml-2"><a href="#" class="text-primary">回复(<i
+                                                            th:text="${cvo.replyCount}">2</i>)</a></li>
+                                                </ul>
+                                            </div>
+                                            <!-- 回复列表 -->
+                                            <ul class="list-unstyled mt-4 bg-gray p-3 font-size-12 text-muted">
 
-<!--												<li class="pb-3 pt-3 mb-3 border-bottom" >-->
-<!--													<div>-->
-<!--										<span >-->
-<!--											<b class="text-info" >寒江雪</b>:&nbsp;&nbsp;-->
-<!--										</span>-->
-<!--														<span >-->
-<!--											<i class="text-info">Sissi</i> 回复-->
-<!--											<b class="text-info" >寒江雪</b>:&nbsp;&nbsp;-->
-<!--										</span>-->
-<!--														<span >这个是直播时间哈，觉得晚的话可以直接看之前的完整录播的~</span>-->
-<!--													</div>-->
-<!--													<div class="mt-3">-->
-<!--														<span >2019-04-15 15:32:18</span>-->
-<!--														<ul class="d-inline float-right">-->
-<!--															<li class="d-inline ml-2">-->
-<!--																<a href="javascript:;"  class="text-primary">-->
-<!--																	<b >赞</b>(<i >1</i>)-->
-<!--																</a>-->
-<!--															</li>-->
-<!--															<li class="d-inline ml-2">|</li>-->
-<!--															<li class="d-inline ml-2"><a  data-toggle="collapse" class="text-primary">回复</a></li>-->
-<!--														</ul>-->
-<!--														<div  class="mt-4 collapse">-->
-<!--															<form method="post" >-->
-<!--																<div>-->
-<!--																	<input type="text" class="input-size" name="content" />-->
-<!--																	<input type="hidden" name="entityType" value="2">-->
-<!--																	<input type="hidden" name="entityId" >-->
-<!--																	<input type="hidden" name="targetId" >-->
-<!--																</div>-->
-<!--																<div class="text-right mt-2">-->
-<!--																	<button type="submit" class="btn btn-primary btn-sm" onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>-->
-<!--																</div>-->
-<!--															</form>-->
-<!--														</div>-->
-<!--													</div>-->
-<!--												</li>-->
+                                                <li class="pb-3 pt-3 mb-3 border-bottom" th:each="rvo:${cvo.replys}">
+                                                    <div>
+										<span th:if="${rvo.target==null}">
+											<b class="text-info" th:text="${rvo.user.username}">寒江雪</b>:&nbsp;&nbsp;
+										</span>
+                                                        <span th:if="${rvo.target!=null}">
+											<i class="text-info" th:text="${rvo.user.username}">Sissi</i> 回复
+											<b class="text-info" th:text="${rvo.target.username}">寒江雪</b>:&nbsp;&nbsp;
+										</span>
+                                                        <span th:utext="${rvo.reply.content}">这个是直播时间哈，觉得晚的话可以直接看之前的完整录播的~</span>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <span th:text="${#dates.format(rvo.reply.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</span>
+                                                        <ul class="d-inline float-right">
+                                                            <li class="d-inline ml-2">
+                                                                <a href="javascript:;" class="text-primary">
+                                                                    <b>赞</b>(<i>1</i>)
+                                                                </a>
+                                                            </li>
+                                                            <li class="d-inline ml-2">|</li>
+                                                            <li class="d-inline ml-2"><a data-toggle="collapse" th:href="|#huifu-${rvoStat.count}|"
+                                                                                         class="text-primary">回复</a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="mt-4 collapse" th:id="|huifu-${rvoStat.count}|">
+                                                            <form method="post" th:action="@{|/comment/add/${post.id}|}">
+                                                                <div>
+                                                                    <input type="text" class="input-size" name="content" th:placeholder="|回复${rvo.user.username}|"/>
+                                                                    <input type="hidden" name="entityType" value="2">
+                                                                    <input type="hidden" name="entityId" th:value="${cvo.comment.id}">
+                                                                    <input type="hidden" name="targetId" th:value="${rvo.user.id}">
+                                                                </div>
+                                                                <div class="text-right mt-2">
+                                                                    <button type="submit" class="btn btn-primary btn-sm"
+                                                                            onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;
+                                                                    </button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </li>
 
-<!--												&lt;!&ndash; 回复输入框 &ndash;&gt;-->
-<!--												<li class="pb-3 pt-3">-->
-<!--													<form method="post" >-->
-<!--														<div>-->
-<!--															<input type="text" class="input-size" name="content" placeholder="请输入你的观点"/>-->
-<!--															<input type="hidden" name="entityType" value="2">-->
-<!--															<input type="hidden" name="entityId" >-->
-<!--														</div>-->
-<!--														<div class="text-right mt-2">-->
-<!--															<button type="submit" class="btn btn-primary btn-sm" onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>-->
-<!--														</div>-->
-<!--													</form>-->
-<!--												</li>-->
-<!--											</ul>-->
-<!--										</div>-->
-<!--									</li>-->
-<!--								</ul>-->
-<!--								&lt;!&ndash; 分页 &ndash;&gt;-->
-<!--								<nav class="mt-5" >-->
-<!--									<ul class="pagination justify-content-center">-->
-<!--										<li class="page-item"><a class="page-link" href="#">首页</a></li>-->
-<!--										<li class="page-item disabled"><a class="page-link" href="#">上一页</a></li>-->
-<!--										<li class="page-item active"><a class="page-link" href="#">1</a></li>-->
-<!--										<li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--										<li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--										<li class="page-item"><a class="page-link" href="#">4</a></li>-->
-<!--										<li class="page-item"><a class="page-link" href="#">5</a></li>-->
-<!--										<li class="page-item"><a class="page-link" href="#">下一页</a></li>-->
-<!--										<li class="page-item"><a class="page-link" href="#">末页</a></li>-->
-<!--									</ul>-->
-<!--								</nav>-->
-							</div>
+                                                <!-- 回复输入框 -->
+                                                <li class="pb-3 pt-3">
+                                                    <form method="post" th:action="@{|/comment/add/${post.id}|}">
+                                                        <div>
+                                                            <input type="text" class="input-size" name="content"
+                                                                   placeholder="发表你的观点"/>
+                                                            <input type="hidden" name="entityType" value="2">
+                                                            <input type="hidden" name="entityId" th:value="${cvo.comment.id}">
+                                                        </div>
+                                                        <div class="text-right mt-2">
+                                                            <button type="submit" class="btn btn-primary btn-sm"
+                                                                    onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+<!--                                引分页-->
+                                <div th:replace="~{commons/commons::pagination}"></div>
+                            </div>
 
-
-
-							<!-- 分页 -->
-<!--							<nav class="mt-5" th:if="${page.rows>0}" th:fragment="pagination">-->
-<!--								<ul class="pagination justify-content-center">-->
-<!--									<li class="page-item">-->
-<!--										<a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>-->
-<!--									</li>-->
-<!--									<li th:class="|page-item ${page.current==1?'disabled':''}|">-->
-<!--										<a class="page-link"-->
-<!--										   th:href="@{${page.path}(current=${page.current-1})}">上一页</a></li>-->
-<!--									<li th:class="|page-item ${i==page.current?'active':''}|"-->
-<!--										th:each="i:${#numbers.sequence(page.from,page.to)}">-->
-<!--										<a class="page-link" th:href="@{${page.path}(current=${i})}"-->
-<!--										   th:text="${i}">1</a>-->
-<!--									</li>-->
-<!--									<li th:class="|page-item ${page.current==page.total?'disabled':''}|">-->
-<!--										<a class="page-link"-->
-<!--										   th:href="@{${page.path}(current=${page.current+1})}">下一页</a>-->
-<!--									</li>-->
-<!--									<li class="page-item">-->
-<!--										<a class="page-link" th:href="@{${page.path}(current=${page.total})}">末页</a>-->
-<!--									</li>-->
-<!--								</ul>-->
-<!--							</nav>-->
-
-							<div class="card-body" style="height: 600px">
-								<p class="text-gray"></p>
-								<div class="chart-holder">
-									<canvas id="lineChart1" style="max-height: 14rem !important;"
-											class="w-100"></canvas>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</section>
+                            <!-- 回帖输入 -->
+                            <div class="container mt-3">
+                                <form class="replyform" method="post" th:action="@{|/comment/add/${post.id}|}">
+                                    <p class="mt-3">
+                                        <a name="replyform"></a>
+                                        <textarea placeholder="发表你的观点" name="content"></textarea>
+                                        <input type="hidden" name="entityType" value="1">
+                                        <input type="hidden" name="entityId" th:value="${post.id}">
+                                    </p>
+                                    <p class="text-right">
+                                        <button type="submit" class="btn btn-primary btn-sm">&nbsp;&nbsp;回&nbsp;&nbsp;帖&nbsp;&nbsp;</button>
+                                    </p>
+                                </form>
+                            </div>
 
 
-		</div>
-		<!-- JavaScript files-->
+
+                            <div class="card-body" style="height: 600px">
+                                <p class="text-gray"></p>
+                                <div class="chart-holder">
+                                    <canvas id="lineChart1" style="max-height: 14rem !important;"
+                                            class="w-100"></canvas>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
 
 
-		<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-		<script th:src="@{/vendor/popper.js/umd/popper.min.js}"></script>
-		<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
-		<script th:src="@{/vendor/jquery.cookie/jquery.cookie.js}"></script>
-		<script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
-		<script th:src="@{/js/js.cookie.min.js}"></script>
-		<script th:src="@{/js/charts-home.js}"></script>
-		<script th:src="@{/js/front.js}"></script>
-		<script th:src="@{/js/jquery-3.3.1.js}"></script>
-		<script th:src="@{/js/global.js}"></script>
-		<script th:src="@{/js/discuss.js}"></script>
+        </div>
+        <!-- JavaScript files-->
 
-	</div>
+
+        <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+        <script th:src="@{/vendor/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/vendor/jquery.cookie/jquery.cookie.js}"></script>
+        <script th:src="@{/vendor/chart.js/Chart.min.js}"></script>
+        <script th:src="@{/js/js.cookie.min.js}"></script>
+        <script th:src="@{/js/charts-home.js}"></script>
+        <script th:src="@{/js/front.js}"></script>
+        <script th:src="@{/js/jquery-3.3.1.js}"></script>
+        <script th:src="@{/js/global.js}"></script>
+        <script th:src="@{/js/discuss.js}"></script>
+
+    </div>
 </div>
 </body>
 </html>
