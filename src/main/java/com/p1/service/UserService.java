@@ -45,6 +45,10 @@ public class UserService implements CommunityConstant {
         return userDao.selectById(id);
     }
 
+    public User findUserByName(String username){
+        return userDao.selectByName(username);
+    }
+
     //注册用户
     public void register(User user) {
 

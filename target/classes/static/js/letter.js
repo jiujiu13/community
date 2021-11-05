@@ -20,12 +20,16 @@ function send_letter() {
 	        }
 
 	        $("#hintModal").modal("show");
+
             setTimeout(function(){
                 $("#hintModal").modal("hide");
                 location.reload();
-            }, 2000);
+            }, 500);
+
 	    }
 	);
+	// 发送完后清空
+	$("#message-text").val("");
 }
 
 function delete_msg() {

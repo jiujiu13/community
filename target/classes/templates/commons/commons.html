@@ -46,7 +46,7 @@
 
 
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item text-center"><small
+                    <a th:href="@{/letter/list}" class="dropdown-item text-center"><small
                             class="font-weight-bold headings-font-family text-uppercase">查看全部通知</small></a>
                 </div>
             </li>
@@ -135,6 +135,12 @@
 <div id="specialsidebar" class="sidebar py-3" th:fragment="specialsidebar">
     <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">主菜单</div>
     <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-list-item" th:if="${active=='letter.html'}"><a href="#"
+                                                                                  th:class="${active=='letter.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>通知列表</span></a></li>
+        <li class="sidebar-list-item" th:if="${active=='letter-detail.html'}"><a href="#"
+                                                                          th:class="${active=='letter-detail.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>私信详情</span></a></li>
         <li class="sidebar-list-item" th:if="${active=='discuss-detail.html'}"><a href="#"
                                          th:class="${active=='discuss-detail.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
                 class="o-home-1 mr-3 text-gray"></i><span>帖子详情</span></a></li>
@@ -152,7 +158,7 @@
 <!-- 分页 -->
 <nav class="mt-5" th:if="${page.rows>0}" th:fragment="pagination">
     <ul class="pagination justify-content-center">
-        <li class="page-item">
+        <li th:class="|page-item ${page.current==1?'disabled':''}|">
             <a class="page-link" th:href="@{${page.path}(current=1)}">首页</a>
         </li>
         <li th:class="|page-item ${page.current==1?'disabled':''}|">
@@ -163,13 +169,16 @@
             <a class="page-link" th:href="@{${page.path}(current=${i})}"
                th:text="${i}">1</a>
         </li>
+
+
         <li th:class="|page-item ${page.current==page.total?'disabled':''}|">
             <a class="page-link"
                th:href="@{${page.path}(current=${page.current+1})}">下一页</a>
         </li>
-        <li class="page-item">
-            <a class="page-link" th:href="@{${page.path}(current=${page.total})}">末页</a>
+        <li th:class="|page-item ${page.current==page.total?'disabled':''}|">
+            <a class="page-link"  th:href="@{${page.path}(current=${page.total})}" id="lastpage">末页</a>
         </li>
+
     </ul>
 </nav>
 

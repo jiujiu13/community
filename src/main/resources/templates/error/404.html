@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" class="h-100">
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -12,8 +12,8 @@
 	
 	<!-- PAGE TITLE HERE -->
 	<title>404</title>
-	
-    <link href="css/style.css" rel="stylesheet">
+
+    <link th:href="@{/css/style.css}" rel="stylesheet">
     
 </head>
 
@@ -27,7 +27,7 @@
                         <h4><i class="fa fa-exclamation-triangle text-warning"></i> 您找的页面访问不到</h4>
                         <p>看看是不是输错了地址</p>
 						<div>
-                            <a class="btn btn-primary" href="index.html">回到首页</a>
+                            <a class="btn btn-primary" href="/go.html">回到首页</a>
                         </div>
                     </div>
                 </div>
@@ -39,9 +39,9 @@
 	Scripts
 ***********************************-->
 <!-- Required vendors -->
-<script src="js/global.min.js"></script>
-<script src="js/custom.min.js"></script>
-<script src="js/dlabnav-init.js"></script>
-<script src="js/styleSwitcher.js"></script>
+    <script th:src="@{/js/global.min.js}"></script>
+    <script th:src="@{/js/custom.min.js}"></script>
+    <script th:src="@{/js/dlabnav-init.js}"></script>
+    <script th:src="@{/js/styleSwitcher.js}"></script>
 </body>
 </html>
