@@ -56,7 +56,7 @@
                     <img th:src="${loginUser.headerUrl}" alt="Jason Doe" style="max-width: 2.5rem;"
                          class="img-fluid rounded-circle shadow">
                 </a>
-                <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong
+                <div aria-labelledby="userInfo" class="dropdown-menu"><a th:href="@{|/user/profile/${loginUser.id}|}" class="dropdown-item"><strong
                         class="d-block text-uppercase headings-font-family" th:utext="${loginUser.username}">
 
                 </strong>><small>

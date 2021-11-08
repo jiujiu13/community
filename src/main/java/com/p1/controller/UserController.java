@@ -2,6 +2,7 @@ package com.p1.controller;
 
 import com.p1.annotation.LoginRequired;
 import com.p1.pojo.User;
+import com.p1.service.LikeService;
 import com.p1.service.UserService;
 import com.p1.util.CommunityUtil;
 import com.p1.util.HostHolder;
@@ -39,6 +40,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LikeService likeService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -110,4 +114,35 @@ public class UserController {
             logger.error("读取头像失败: " + e.getMessage());
         }
     }
+
+    // 个人主页
+    @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
+    public String getProfilePage(@PathVariable("userId") int userId, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在!");
+        }
+
+        // 用户
+        model.addAttribute("user", user);
+        // 点赞数量
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount", likeCount);
+
+        // 关注数量
+//        long followeeCount = followService.findFolloweeCount(userId, ENTITY_TYPE_USER);
+//        model.addAttribute("followeeCount", followeeCount);
+//        // 粉丝数量
+//        long followerCount = followService.findFollowerCount(ENTITY_TYPE_USER, userId);
+//        model.addAttribute("followerCount", followerCount);
+//        // 是否已关注
+//        boolean hasFollowed = false;
+//        if (hostHolder.getUser() != null) {
+//            hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
+//        }
+//        model.addAttribute("hasFollowed", hasFollowed);
+
+        return "/site/profile";
+    }
+
 }

@@ -55,3 +55,8 @@ mybatis:
 #邮箱
 #在properties配置
 ---
+#redis
+spring:
+  redis:
+    database: 11
+    port: 6379

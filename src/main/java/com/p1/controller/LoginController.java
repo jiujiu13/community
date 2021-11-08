@@ -54,7 +54,6 @@ public class LoginController extends BaseController implements CommunityConstant
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             return "/site/registerError";
         }
-
         //验证完没有问题的话就向数据库传数据
         userService.register(user);
         return "/site/register-ok";
