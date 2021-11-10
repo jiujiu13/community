@@ -41,4 +41,10 @@
         where id = #{id}
     </select>
 
+    <select id="selectCommentsByUserId" resultType="Comment">
+        select * from comment where userId=#{userId}
+        order by createTime desc
+        limit #{offset}, #{limit}
+    </select>
+
 </mapper>

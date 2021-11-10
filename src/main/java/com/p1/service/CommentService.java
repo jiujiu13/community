@@ -61,4 +61,8 @@ public class CommentService implements CommunityConstant {
         return CommentDao.selectCommentById(id);
     }
 
+    public List<Comment> findCommentByUserId(int userId ,int offset,int limit){
+        return CommentDao.selectCommentsByUserId(userId,offset,limit);
+    }
+
 }

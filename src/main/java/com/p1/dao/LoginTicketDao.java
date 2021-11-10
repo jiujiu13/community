@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
+@Deprecated
 public interface LoginTicketDao {
 
     //添加登陆凭据

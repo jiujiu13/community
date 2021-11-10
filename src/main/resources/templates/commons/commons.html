@@ -135,6 +135,9 @@
 <div id="specialsidebar" class="sidebar py-3" th:fragment="specialsidebar">
     <div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">主菜单</div>
     <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-list-item" th:if="${active=='profile.html'}"><a href="#"
+                                                                          th:class="${active=='profile.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>个人中心</span></a></li>
         <li class="sidebar-list-item" th:if="${active=='letter.html'}"><a href="#"
                                                                                   th:class="${active=='letter.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
                 class="o-home-1 mr-3 text-gray"></i><span>通知列表</span></a></li>

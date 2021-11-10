@@ -2,8 +2,10 @@ package com.p1.controller;
 
 import com.p1.annotation.LoginRequired;
 import com.p1.pojo.User;
+import com.p1.service.FollowService;
 import com.p1.service.LikeService;
 import com.p1.service.UserService;
+import com.p1.util.CommunityConstant;
 import com.p1.util.CommunityUtil;
 import com.p1.util.HostHolder;
 import org.apache.commons.lang3.StringUtils;
@@ -13,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,10 +23,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController implements CommunityConstant {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -43,6 +44,9 @@ public class UserController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private FollowService followService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -130,19 +134,41 @@ public class UserController {
         model.addAttribute("likeCount", likeCount);
 
         // 关注数量
-//        long followeeCount = followService.findFolloweeCount(userId, ENTITY_TYPE_USER);
-//        model.addAttribute("followeeCount", followeeCount);
-//        // 粉丝数量
-//        long followerCount = followService.findFollowerCount(ENTITY_TYPE_USER, userId);
-//        model.addAttribute("followerCount", followerCount);
-//        // 是否已关注
-//        boolean hasFollowed = false;
-//        if (hostHolder.getUser() != null) {
-//            hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
-//        }
-//        model.addAttribute("hasFollowed", hasFollowed);
+        long followeeCount = followService.findFolloweeCount(userId, ENTITY_TYPE_USER);
+        model.addAttribute("followeeCount", followeeCount);
+        // 粉丝数量
+        long followerCount = followService.findFollowerCount(ENTITY_TYPE_USER, userId);
+        model.addAttribute("followerCount", followerCount);
+        // 是否已关注
+        boolean hasFollowed = false;
+        if (hostHolder.getUser() != null) {
+            hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
+        }
+        model.addAttribute("hasFollowed", hasFollowed);
 
         return "/site/profile";
     }
+
+    @RequestMapping(path = "/profile/ajax/{userId}", method = RequestMethod.GET)
+    @ResponseBody  //记住异步请求必须有这个注解！！！
+    public String getAjaxProfilePage(@PathVariable("userId") int userId) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在!");
+        }
+
+
+        // 粉丝数量
+        long followerCount = followService.findFollowerCount(ENTITY_TYPE_USER, userId);
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("followerCount", followerCount);
+
+
+        return CommunityUtil.getJSONString(0, null, map);
+    }
+
+
 
 }

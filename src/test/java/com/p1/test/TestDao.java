@@ -1,18 +1,18 @@
 package com.p1.test;
 
 import com.p1.SpbApplication;
+import com.p1.dao.CommentDao;
 import com.p1.dao.DiscussPostDao;
 import com.p1.dao.LoginTicketDao;
 import com.p1.dao.UserDao;
+import com.p1.pojo.Comment;
 import com.p1.pojo.DiscussPost;
 import com.p1.pojo.LoginTicket;
 import com.p1.pojo.User;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +29,9 @@ public class TestDao {
 
     @Autowired
     private LoginTicketDao loginTicketDao;
+
+    @Autowired
+    private CommentDao commentDao;
     @Test
     public void test(){
         User user = userDao.selectById(101);
@@ -66,5 +69,13 @@ public class TestDao {
         loginTicketDao.updateStatus("abc", 1);
         loginTicket = loginTicketDao.selectByTicket("abc");
         System.out.println(loginTicket);
+    }
+
+    @Test
+    public void test5(){
+        List<Comment> comments = commentDao.selectCommentsByUserId(150, 0, 10);
+        for (Comment comment : comments) {
+            System.out.println(comment);
+        }
     }
 }

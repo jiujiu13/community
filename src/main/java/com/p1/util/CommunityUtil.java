@@ -34,7 +34,8 @@ public class CommunityUtil {
                 json.put(key, map.get(key));
             }
         }
-        return json.toJSONString();
+        String s = json.toJSONString();
+        return s;
     }
 
     public static String getJSONString(int code, String msg) {

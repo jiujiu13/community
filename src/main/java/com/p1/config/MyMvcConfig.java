@@ -34,6 +34,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/site/email-operate.html").setViewName("/site/email-operate");
         registry.addViewController("/site/discuss-detail.html").setViewName("/site/discuss-detail");
         registry.addViewController("/site/letter.html").setViewName("/site/letter");
+        registry.addViewController("/site/user-comment.html").setViewName("/site/user-comment");
         registry.addViewController("/error/message-error.html").setViewName("/error/message-error");
         registry.addViewController("/error/500.html").setViewName("/error/500");
         //测试jdbc能否使用
@@ -45,12 +46,15 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //登陆凭证拦截
         registry.addInterceptor(loginTicketInterceptor)
                 .excludePathPatterns("/css/**","/fonts/**","/img/**","/js/**","/vendor/**");
 
+        //登录拦截（有些功能必须登录）
         registry.addInterceptor(loginRequiredInterceptor)
                 .excludePathPatterns("/css/**","/fonts/**","/img/**","/js/**","/vendor/**");
 
+        //私信拦截（不能查看别人的私信）
         registry.addInterceptor(messageRequiredInterceptor)
                 .excludePathPatterns("/css/**","/fonts/**","/img/**","/js/**","/vendor/**");
     }
