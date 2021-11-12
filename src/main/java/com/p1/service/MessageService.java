@@ -65,5 +65,15 @@ public class MessageService {
         return messageDao.selectNotices(userId, topic, offset, limit);
     }
 
+    public int deleteMessage(int id){
+        return messageDao.deleteMessage(id);
+    }
+
+    public Message findById(int id){
+        return messageDao.selectById(id);
+    }
+
+
+
 }
 

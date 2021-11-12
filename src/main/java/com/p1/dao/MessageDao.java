@@ -27,7 +27,7 @@ public interface MessageDao {
     // 新增消息
     int insertMessage(Message message);
 
-    // 修改消息的状态
+    // 修改消息的状态,一般用于从未读改为已读
     int updateStatus(List<Integer> ids, int status);
 
     // 查询某个主题下最新的通知
@@ -41,4 +41,11 @@ public interface MessageDao {
 
     // 查询某个主题所包含的通知列表
     List<Message> selectNotices(int userId, String topic, int offset, int limit);
+
+    //删除某条私信（状态改为2）
+    int deleteMessage(int id);
+
+    //通过id找到私信
+    Message selectById(int id);
+
 }

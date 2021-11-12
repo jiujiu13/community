@@ -1,8 +1,12 @@
 package com.p1.controller;
 
+import com.p1.event.EventProducer;
 import com.p1.pojo.Comment;
+import com.p1.pojo.DiscussPost;
+import com.p1.pojo.Event;
 import com.p1.service.CommentService;
 import com.p1.service.DiscussPostService;
+import com.p1.util.CommunityConstant;
 import com.p1.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +18,7 @@ import java.util.Date;
 
 @Controller
 @RequestMapping("/comment")
-public class CommentController {
+public class CommentController implements CommunityConstant {
     @Autowired
     private CommentService commentService;
 
@@ -24,6 +28,9 @@ public class CommentController {
     @Autowired
     private DiscussPostService discussPostService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
 
     //增加评论
     @RequestMapping(path = "/add/{discussPostId}", method = RequestMethod.POST)
@@ -32,6 +39,22 @@ public class CommentController {
         comment.setStatus(0);
         comment.setCreateTime(new Date());
         commentService.addComment(comment);
+
+        //触发通知
+        Event event = new Event().setTopic(TOPIC_COMMENT)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(comment.getEntityType())
+                .setEntityId(comment.getEntityId())
+                .setData("postId", discussPostId);
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
+            DiscussPost target = discussPostService.findDiscussPostById(comment.getEntityId());
+            event.setEntityUserId(target.getUserId());
+        } else if (comment.getEntityType() == ENTITY_TYPE_COMMENT) {
+            Comment target = commentService.findCommentById(comment.getEntityId());
+            event.setEntityUserId(target.getUserId());
+        }
+        eventProducer.fireEvent(event);
+
         return "redirect:/discuss/detail/" + discussPostId;
     }
 }

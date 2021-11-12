@@ -3,6 +3,7 @@ package com.p1.config;
 import com.p1.controller.interceptor.LoginRequiredInterceptor;
 import com.p1.controller.interceptor.LoginTicketInterceptor;
 import com.p1.controller.interceptor.MessageRequiredInterceptor;
+import com.p1.controller.interceptor.NewNoticeInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,6 +21,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private MessageRequiredInterceptor messageRequiredInterceptor;
+
+    @Autowired
+    private NewNoticeInterceptor newNoticeInterceptor;
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("go");
@@ -56,6 +61,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
         //私信拦截（不能查看别人的私信）
         registry.addInterceptor(messageRequiredInterceptor)
+                .excludePathPatterns("/css/**","/fonts/**","/img/**","/js/**","/vendor/**");
+
+        //新通知未读消息
+        registry.addInterceptor(newNoticeInterceptor)
                 .excludePathPatterns("/css/**","/fonts/**","/img/**","/js/**","/vendor/**");
     }
 }

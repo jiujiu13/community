@@ -7,6 +7,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="all,follow">
+	<link rel="stylesheet" th:href="@{/css/background.css}">
 
 	<!-- Bootstrap CSS-->
 	<link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
@@ -24,7 +25,7 @@
 	<!-- Favicon-->
 	<link rel="shortcut icon" th:href="@{/img/favicon.png?3}">
 	<link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+
 	<link rel="stylesheet" th:href="@{/css/letter.css}" />
 	<!-- Tweaks for older IEs--><!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -34,7 +35,7 @@
 </head>
 
 
-<body>
+<body class="bg">
 <!-- navbar-->
 <!-- 引头部-->
 <div th:replace="~{commons/commons::topbar}"></div>
@@ -54,8 +55,8 @@
 			<section>
 				<div class="row mb-4" style="width: 2700px">
 					<div class="col-lg-7 mb-4 mb-lg-0">
-						<div class="card">
-							<div class="card-header">
+						<div >
+							<div >
 								<h2 class="h6 text-uppercase mb-0"></h2>
 							</div>
 							<!--                            功能模块-->
@@ -73,8 +74,8 @@
 													</a>
 												</li>
 												<li class="nav-item" style="float: left">
-													<a class="nav-link position-relative" >
-														系统通知<span class="badge badge-danger" ></span>
+													<a class="nav-link position-relative" th:href="@{/notice/list}">
+														系统通知<span class="badge badge-danger" th:text="${noticeUnreadCount}" th:if="${noticeUnreadCount!=0}">3</span>
 													</a>
 												</li>
 												<button type="button" class="btn btn-primary btn-sm  " data-toggle="modal" data-target="#sendModal" style="float: right;margin-left: 750px">发私信</button>
@@ -173,5 +174,6 @@
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/global.js}"></script>
 	<script th:src="@{/js/letter.js}"></script>
+<!--	<script th:src="@{/js/notice.js}"></script>-->
 </body>
 </html>

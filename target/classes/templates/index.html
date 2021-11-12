@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
-
+    <link rel="stylesheet" href="css/background.css">
 
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -30,7 +30,7 @@
     <script src="js/jquery-3.3.1.js"></script>
     <![endif]-->
 </head>
-<body>
+<body class="bg">
 <!-- navbar-->
 <!-- 引头部-->
 <div th:replace="~{commons/commons::topbar}"></div>
@@ -42,12 +42,12 @@
         <div class="container-fluid px-xl-5">
             <section class="py-5">
                 <div class="row">
-                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
-                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0"  >
+                        <div class=" shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
                             <div class="flex-grow-1 d-flex align-items-center">
                                 <div class="dot mr-3 bg-blue"></div>
                                 <div class="text">
-                                    <a class="mb-0" href="#">最新发布</a><br><span class="text-gray">共xxx条</span>
+                                    <a class="mb-0" href="#" >最新发布</a><br><span class="text-gray"></span>
                                 </div>
                             </div>
                             <div class="icon text-white bg-blue"><i class="fa fa-dolly-flatbed"></i></div>
@@ -55,11 +55,11 @@
 
                     </div>
                     <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
-                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                        <div class=" shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
                             <div class="flex-grow-1 d-flex align-items-center">
                                 <div class="dot mr-3 bg-red"></div>
                                 <div class="text">
-                                    <a class="mb-0" href="#" style="color:red;">最热发布</a><br><span class="text-gray">共xxx条</span>
+                                    <a class="mb-0" href="#" style="color:red;">最热发布</a><br><span class="text-gray"></span>
                                 </div>
                             </div>
                             <div class="icon text-white bg-red"><i class="fas fa-receipt"></i></div>
@@ -68,13 +68,14 @@
                 </div>
             </section>
             <section>
-                <div class="row mb-4" style="width: 2700px">
-                    <div class="col-lg-7 mb-4 mb-lg-0">
-                        <div class="card">
-                            <div class="card-header">
+                <div class="row mb-4" style="width: 2700px" >
+                    <div class="col-lg-7 mb-4 mb-lg-0"  >
+                        <div >
+                            <div >
                                 <button type="button" class="btn btn-primary btn-sm  rt-0" data-toggle="modal"
                                         data-target="#publishModal" style="float: right" th:if="${loginUser!=null}">我要发布
                                 </button>
+                                <br><br>
                                 <!-- 弹出框 -->
                                 <div class="modal fade" id="publishModal" tabindex="-1" role="dialog"
                                      aria-labelledby="publishModalLabel" aria-hidden="true">
@@ -145,7 +146,7 @@
                                             <span class="badge badge-secondary bg-danger" th:if="${map.post.status==1}">精华</span>
                                         </h6>
                                         <div class="text-muted font-size-12">
-                                            <u class="mr-3" th:utext="${map.user.username}">寒江雪</u> 发布于 <b
+                                            <u class="mr-3" th:utext="${map.user.username}" style="color: #6c757d;font-weight: bold" >寒江雪</u> 发布于 <b
                                                 th:text="${#dates.format(map.post.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15
                                             15:32:18</b>
                                             <ul class="d-inline float-right">
@@ -192,6 +193,7 @@
         <script src="js/charts-home.js"></script>
         <script src="js/front.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<!--        <script src="js/notice.js"></script>-->
 
         <script>
             $(function () {

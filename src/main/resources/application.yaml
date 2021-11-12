@@ -69,3 +69,4 @@ spring:
     #     新版本不支持content-type: text/html，故新写法
     servlet:
       content-type: text/html
+

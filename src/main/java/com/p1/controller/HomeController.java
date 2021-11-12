@@ -4,11 +4,9 @@ import com.p1.pojo.Comment;
 import com.p1.pojo.DiscussPost;
 import com.p1.pojo.Page;
 import com.p1.pojo.User;
-import com.p1.service.CommentService;
-import com.p1.service.DiscussPostService;
-import com.p1.service.LikeService;
-import com.p1.service.UserService;
+import com.p1.service.*;
 import com.p1.util.CommunityConstant;
+import com.p1.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,12 +33,20 @@ public class HomeController implements CommunityConstant {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private MessageService messageService;
+
+    @Autowired
+    private HostHolder hostHolder;
+
     @GetMapping("/index")
     public String getIndexPage(Model model, Page page) {
 
         //不用model.addAttribute("page", page);model自动就有page
         page.setRows(discussPostService.findDiscussPostRows(0));
         page.setPath("/index");
+
+
 
         List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffset(),page.getLimit());
         List<Map<String, Object>> discussPosts = new ArrayList<>();
@@ -148,6 +154,29 @@ public class HomeController implements CommunityConstant {
 
         return "/site/user-comment";
     }
+
+    //用拦截器实现此功能了
+//    @RequestMapping(path = "/notice",method = RequestMethod.GET)
+//    @ResponseBody
+//    public String getNotice(Model model){
+//        if(hostHolder.getUser()!=null){
+//            User u = hostHolder.getUser();
+//            HashMap<String,Object> map=new HashMap<>();
+//            //所有未读评论的数量
+//            int unreadComment = messageService.findNoticeUnreadCount(u.getId(), TOPIC_COMMENT);
+//            map.put("unreadComment", unreadComment);
+//            //所有未读赞的数量
+//            int unreadLike = messageService.findNoticeUnreadCount(u.getId(), TOPIC_LIKE);
+//            map.put("unreadLike", unreadLike);
+//            //所有未读关注的数量
+//            int unreadFollow = messageService.findNoticeUnreadCount(u.getId(), TOPIC_FOLLOW);
+//            map.put("unreadFollow", unreadFollow);
+//            return  CommunityUtil.getJSONString(0, null, map);
+//        }else {
+//            return CommunityUtil.getJSONString(1);
+//        }
+//
+//    }
 
 }
 

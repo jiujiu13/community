@@ -1,5 +1,7 @@
 package com.p1.controller;
 
+import com.p1.event.EventProducer;
+import com.p1.pojo.Event;
 import com.p1.pojo.Page;
 import com.p1.pojo.User;
 import com.p1.service.FollowService;
@@ -30,8 +32,8 @@ public class FollowController implements CommunityConstant {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private EventProducer eventProducer;
+    @Autowired
+    private EventProducer eventProducer;
 
     @RequestMapping(path = "/follow", method = RequestMethod.POST)
     @ResponseBody
@@ -41,13 +43,13 @@ public class FollowController implements CommunityConstant {
         followService.follow(user.getId(), entityType, entityId);
 
         // 触发关注事件
-//        Event event = new Event()
-//                .setTopic(TOPIC_FOLLOW)
-//                .setUserId(hostHolder.getUser().getId())
-//                .setEntityType(entityType)
-//                .setEntityId(entityId)
-//                .setEntityUserId(entityId);
-//        eventProducer.fireEvent(event);
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
 
         return CommunityUtil.getJSONString(0, "已关注!");
     }

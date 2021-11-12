@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <link rel="stylesheet" th:href="@{/css/background.css}">
 
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
@@ -29,7 +30,7 @@
     <script th:src="@{/js/jquery-3.3.1.js}"></script>
     <![endif]-->
 </head>
-<body>
+<body class="bg">
 <!-- navbar-->
 <!-- 引头部-->
 <div th:replace="~{commons/commons::topbar}"></div>
@@ -44,7 +45,7 @@
             <section class="py-5">
                 <div class="row">
                     <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
-                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                        <div class=" shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
                             <div class="flex-grow-1 d-flex align-items-center">
                                 <div class="dot mr-3 bg-blue"></div>
                                 <div class="text">
@@ -56,7 +57,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
-                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                        <div class=" shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
                             <div class="flex-grow-1 d-flex align-items-center">
                                 <div class="dot mr-3 bg-red"></div>
                                 <div class="text">
@@ -67,7 +68,7 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
-                        <div class="bg-white shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
+                        <div class=" shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
                             <div class="flex-grow-1 d-flex align-items-center">
                                 <div class="dot mr-3 bg-green"></div>
                                 <div class="text">
@@ -83,8 +84,8 @@
             <section>
                 <div class="row mb-4" style="width: 2700px">
                     <div class="col-lg-7 mb-4 mb-lg-0">
-                        <div class="card">
-                            <div class="card-header">
+                        <div >
+                            <div >
                                 <h2 class="h6 text-uppercase mb-0"></h2>
                             </div>
                             <!--                            功能模块-->
@@ -167,6 +168,7 @@
     <script th:src="@{/js/jquery-3.3.1.js}"></script>
     <script th:src="@{/js/global.js}"></script>
     <script th:src="@{/js/profile.js}"></script>
+<!--    <script th:src="@{/js/notice.js}"></script>-->
 
 </div>
 

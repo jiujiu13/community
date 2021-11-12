@@ -42,7 +42,8 @@
     </select>
 
     <select id="selectCommentsByUserId" resultType="Comment">
-        select * from comment where userId=#{userId}
+        select <include refid="selectFields"></include>
+        from comment where userId=#{userId}
         order by createTime desc
         limit #{offset}, #{limit}
     </select>

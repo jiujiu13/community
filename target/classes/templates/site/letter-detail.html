@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <link rel="stylesheet" th:href="@{/css/background.css}">
 
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}">
@@ -28,15 +29,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/letter.css}"/>
+    <script th:src="@{/js/jquery-3.3.1.js}"></script>
     <!-- Tweaks for older IEs--><!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script th:src="@{/js/jquery-3.3.1.js}"></script>
+
     <![endif]-->
 </head>
 
 
-<body>
+<body class="bg">
 <!-- navbar-->
 <!-- 引头部-->
 <div th:replace="~{commons/commons::topbar}"></div>
@@ -56,8 +58,8 @@
             <section>
                 <div class="row mb-4" style="width: 2700px">
                     <div class="col-lg-7 mb-4 mb-lg-0">
-                        <div class="card">
-                            <div class="card-header">
+                        <div >
+                            <div >
                                 <h2 class="h6 text-uppercase mb-0"></h2>
                             </div>
                             <!--                            功能模块-->
@@ -124,10 +126,10 @@
                                                         <strong class="mr-auto" th:utext="${map.fromUser.username}">落基山脉下的闲人</strong>
                                                         <small th:text="${#dates.format(map.letter.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-25
                                                             15:49:32</small>
-                                                        <button type="button" class="ml-2 mb-1 close"
-                                                                data-dismiss="toast" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
+                                                        <button  type="button" class="ml-2 mb-1 close gg" th:onclick="|del(${map.letter.id})|" >
+                                                            <span >&times;</span>
                                                         </button>
+
                                                     </div>
 
                                                     <div class="toast-body" th:utext="${map.letter.content}">
@@ -184,16 +186,53 @@
                                 <div th:replace="~{commons/commons::footbar}"></div>
                             </div>
 
-                            <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-                                    crossorigin="anonymous"></script>
+<!--                            <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>-->
+<!--                            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"-->
+<!--                                    crossorigin="anonymous"></script>-->
                             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
                                     crossorigin="anonymous"></script>
                             <script th:src="@{/js/global.js}"></script>
                             <script th:src="@{/js/letter.js}"></script>
+<!--                            <script th:src="@{/js/notice.js}"></script>-->
                             <script>
                                 function backhome() {
                                     location.href = "/letter/list";
+                                }
+
+                                function del(id) {
+                                        $.ajax({
+                                            url: CONTEXT_PATH + "/letter/judge/"+ id,
+                                            async:false,
+                                            type:'get',
+                                            datatype:'json',
+                                            data:null,
+                                            success:function(data){
+                                                data = $.parseJSON(data);
+                                                if (data.code == 0) {
+
+                                                    var msg = "您真的要删除吗？";
+                                                    if (confirm(msg)==true) {
+                                                        $.ajax({
+                                                            url: CONTEXT_PATH + "/letter/delete/" + id,
+                                                            async: false,
+                                                            type: 'get',
+                                                            datatype: 'json',
+                                                            data: null,
+                                                            success: function (data) {
+                                                                data = $.parseJSON(data);
+                                                                if (data.code == 0) {
+                                                                    window.location.reload();
+                                                                }
+                                                            },
+                                                        });
+                                                    }
+
+                                                }
+                                            },
+                                        });
+
+
+
                                 }
                             </script>
 
@@ -209,11 +248,12 @@
                                     var flag=newUrl.indexOf("current") >0 ;
                                     if(!flag){
                                         document.getElementById("lastpage").click();
-
                                     }
 
                                 });
                             </script>
                         </div>
+                    </div>
+
 </body>
 </html>

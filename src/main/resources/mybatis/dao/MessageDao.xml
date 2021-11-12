@@ -74,6 +74,7 @@
         values(#{fromId},#{toId},#{conversationId},#{content},#{status},#{createTime})
     </insert>
 
+<!--    一般用于从未读改为已读-->
     <update id="updateStatus">
         update message set status = #{status}
         where id in
@@ -85,7 +86,7 @@
     <select id="selectLatestNotice" resultType="Message">
         select <include refid="selectFields"></include>
         from message
-        where id in (
+        where id = (
         select max(id) from message
         where status != 2
         and fromId = 1
@@ -122,5 +123,16 @@
         order by createTime desc
         limit #{offset}, #{limit}
     </select>
+
+    <select id="selectById" resultType="Message">
+        select <include refid="selectFields"></include>
+        from message
+        where id=#{id}
+    </select>
+
+    <update id="deleteMessage">
+        update message set status = 2
+        where id=#{id}
+    </update>
 
 </mapper>
