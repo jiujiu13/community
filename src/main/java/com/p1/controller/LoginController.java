@@ -2,6 +2,8 @@ package com.p1.controller;
 
 import com.google.code.kaptcha.Producer;
 import com.p1.dao.UserDao;
+import com.p1.event.EventProducer;
+import com.p1.pojo.Event;
 import com.p1.pojo.User;
 import com.p1.service.UserService;
 import com.p1.util.CommunityConstant;
@@ -45,6 +47,9 @@ public class LoginController extends BaseController implements CommunityConstant
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     //注册提交
     @RequestMapping("/signUp")
     public String Register(User user) {
@@ -62,6 +67,14 @@ public class LoginController extends BaseController implements CommunityConstant
         }
         //验证完没有问题的话就向数据库传数据
         userService.register(user);
+
+        // 触发发送邮箱事件
+        Event event = new Event()
+                .setTopic(TOPIC_REGISTER)
+                .setUserId(user.getId());
+
+        eventProducer.fireEvent(event);
+
         return "/site/register-ok";
     }
 

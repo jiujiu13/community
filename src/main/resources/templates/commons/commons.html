@@ -11,12 +11,12 @@
         <a href="/go.html" class="navbar-brand font-weight-bold text-uppercase text-base">lsyy社区论坛</a>
         <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
             <li class="nav-item" style="margin-right: 50px">
-                <form id="searchForm" class="ml-auto d-none d-lg-block ">
+                <form id="searchForm" class="ml-auto d-none d-lg-block " method="get" th:action="@{/search}">
                     <div class="form-group position-relative mb-0" >
                         <button type="submit" style="top: -3px; left: 0;"
                                 class="position-absolute  border-0 p-0"><i
                                 class="o-search-magnify-1 text-gray text-lg bg"></i></button>
-                        <input type="search" placeholder="搜索 ..." 
+                        <input type="search" placeholder="搜索 ..."  name="keyword" th:value="${keyword}"
                                class="form-control form-control-sm border-0 no-shadow pl-4 bg">
                     </div>
                 </form>
@@ -156,6 +156,9 @@
 <div id="specialsidebar" class="sidebar py-3" th:fragment="specialsidebar">
     <div class=" text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">主菜单</div>
     <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-list-item" th:if="${active=='search.html'}"><a href="#"
+                                                                           th:class="${active=='search.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
+                class="o-home-1 mr-3 text-gray"></i><span>搜索</span></a></li>
         <li class="sidebar-list-item" th:if="${active=='profile.html'}"><a href="#"
                                                                            th:class="${active=='profile.html'?'sidebar-link text-muted active':'sidebar-link text-muted'}"><i
                 class="o-home-1 mr-3 text-gray"></i><span>个人中心</span></a></li>

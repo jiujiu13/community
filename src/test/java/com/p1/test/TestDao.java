@@ -8,7 +8,6 @@ import com.p1.dao.UserDao;
 import com.p1.pojo.Comment;
 import com.p1.pojo.DiscussPost;
 import com.p1.pojo.LoginTicket;
-import com.p1.pojo.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,10 +31,13 @@ public class TestDao {
 
     @Autowired
     private CommentDao commentDao;
+
     @Test
     public void test(){
-        User user = userDao.selectById(101);
-        System.out.println(user);
+//        User user = userDao.selectById(101);
+//        System.out.println(user);
+        DiscussPost post = discussPostDao.selectDiscussPostById(51);
+        System.out.println(post.getCommentCount());
     }
 
     @Test

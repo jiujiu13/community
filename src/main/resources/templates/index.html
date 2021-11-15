@@ -202,18 +202,20 @@
                     var title = $("#recipient-name").val();
                     var content = $("#message-text").val();
                     // 发送异步请求(POST)
-                    $.post("/discuss/add", {"title": title, "content": content}, function (data) {
+                    if(!title.trim()=="") {
+                        $.post("/discuss/add", {"title": title, "content": content}, function (data) {
 
-                            // 在提示框中显示返回消息
-                            $("#hintBody").text(data);
-                            // 显示提示框
-                            $("#hintModal").modal("show");
-                            // 2秒后,自动隐藏提示框
-                            setTimeout(function () {
-                               location.href="/go.html";
-                            }, 2000);
-                        }
-                    );
+                                // 在提示框中显示返回消息
+                                $("#hintBody").text(data);
+                                // 显示提示框
+                                $("#hintModal").modal("show");
+                                // 2秒后,自动隐藏提示框
+                                setTimeout(function () {
+                                    location.href = "/go.html";
+                                }, 2000);
+                            }
+                        );
+                    }else{alert("请写标题");}
                 });
             });
         </script>

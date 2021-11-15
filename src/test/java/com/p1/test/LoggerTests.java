@@ -1,7 +1,7 @@
 package com.p1.test;
 
 import com.p1.SpbApplication;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,17 +1,27 @@
 package com.p1.event;
 
 import com.alibaba.fastjson.JSONObject;
+import com.p1.pojo.DiscussPost;
 import com.p1.pojo.Event;
 import com.p1.pojo.Message;
+import com.p1.pojo.User;
 import com.p1.service.DiscussPostService;
+import com.p1.service.ElasticsearchService;
 import com.p1.service.MessageService;
+import com.p1.service.UserService;
 import com.p1.util.CommunityConstant;
+import com.p1.util.DateUtil;
+import com.p1.util.MailClient;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -28,8 +38,25 @@ public class EventConsumer implements CommunityConstant {
     @Autowired
     private DiscussPostService discussPostService;
 
-//    @Autowired
-//    private ElasticsearchService elasticsearchService;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ElasticsearchService elasticsearchService;
+
+    //注入模板引擎
+    @Autowired
+    private TemplateEngine templateEngine;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Value("${community.path.domain}")
+    private String domain;
+
+    //注入邮箱客户端
+    @Autowired
+    private MailClient mailClient;
 
 //    @Value("${wk.image.command}")
 //    private String wkImageCommand;
@@ -83,25 +110,57 @@ public class EventConsumer implements CommunityConstant {
         message.setContent(JSONObject.toJSONString(content));
         messageService.addMessage(message);
     }
-//
-//    // 消费发帖事件
-//    @KafkaListener(topics = {TOPIC_PUBLISH})
-//    public void handlePublishMessage(ConsumerRecord record) {
-//        if (record == null || record.value() == null) {
-//            logger.error("消息的内容为空!");
-//            return;
-//        }
-//
-//        Event event = JSONObject.parseObject(record.value().toString(), Event.class);
-//        if (event == null) {
-//            logger.error("消息格式错误!");
-//            return;
-//        }
-//
-//        DiscussPost post = discussPostService.findDiscussPostById(event.getEntityId());
-//        elasticsearchService.saveDiscussPost(post);
-//    }
-//
+
+    // 消费发帖事件
+    @KafkaListener(topics = {TOPIC_PUBLISH})
+    public void handlePublishMessage(ConsumerRecord record) {
+        if (record == null || record.value() == null) {
+            logger.error("消息的内容为空!");
+            return;
+        }
+
+        Event event = JSONObject.parseObject(record.value().toString(), Event.class);
+        if (event == null) {
+            logger.error("消息格式错误!");
+            return;
+        }
+
+        DiscussPost post = discussPostService.findDiscussPostById(event.getEntityId());
+        elasticsearchService.saveDiscussPost(post);
+    }
+
+    //消费邮箱激活
+    @KafkaListener(topics = {TOPIC_REGISTER})
+    public void handleEmailRegister(ConsumerRecord record) {
+        if (record == null || record.value() == null) {
+            logger.error("消息的内容为空!");
+            return;
+        }
+
+        Event event = JSONObject.parseObject(record.value().toString(), Event.class);
+        if (event == null) {
+            logger.error("消息格式错误!");
+            return;
+        }
+
+        User user = userService.findUserById(event.getUserId());
+        // 激活邮件
+        Context context = new Context();
+        //传用户名
+        context.setVariable("username",user.getUsername());
+        //传邮箱
+        context.setVariable("email",user.getEmail());
+        //传日期，注意要改格式
+        context.setVariable("creatTime", DateUtil.date2String(user.getCreateTime(),"yyyy-MM-dd HH:mm:ss"));
+        // http://localhost:8080/activation/101/code
+        String url = domain + "/activation/" + user.getId() + "/" + user.getActivationCode();
+        //传url
+        context.setVariable("url", url);
+
+        String content = templateEngine.process("/mail/activation", context);
+        mailClient.sendMail(user.getEmail(), "激活账号", content);
+    }
+
 //    // 消费删帖事件
 //    @KafkaListener(topics = {TOPIC_DELETE})
 //    public void handleDeleteMessage(ConsumerRecord record) {

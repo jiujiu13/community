@@ -1,24 +1,19 @@
 package com.p1.controller;
 
-import com.p1.pojo.Comment;
-import com.p1.pojo.DiscussPost;
-import com.p1.pojo.Page;
-import com.p1.pojo.User;
+import com.p1.event.EventProducer;
+import com.p1.pojo.*;
 import com.p1.service.CommentService;
 import com.p1.service.DiscussPostService;
 import com.p1.service.LikeService;
 import com.p1.service.UserService;
 import com.p1.util.CommunityConstant;
-import com.p1.util.CommunityUtil;
 import com.p1.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -43,6 +38,9 @@ public class DiscussPostController extends BaseController implements CommunityCo
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @RequestMapping(path = "/add", method = RequestMethod.POST)
     public void addDiscussPost(String title, String content, HttpServletResponse response) throws IOException {
         User user = hostHolder.getUser();
@@ -58,14 +56,14 @@ public class DiscussPostController extends BaseController implements CommunityCo
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
 
-//        // 触发发帖事件
-//        Event event = new Event()
-//                .setTopic(TOPIC_PUBLISH)
-//                .setUserId(user.getId())
-//                .setEntityType(ENTITY_TYPE_POST)
-//                .setEntityId(post.getId());
-//        eventProducer.fireEvent(event);
-//
+       // 触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
+
 //        // 计算帖子分数
 //        String redisKey = RedisKeyUtil.getPostScoreKey();
 //        redisTemplate.opsForSet().add(redisKey, post.getId());

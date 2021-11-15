@@ -72,6 +72,11 @@ public interface CommunityConstant {
     String TOPIC_SHARE = "share";
 
     /**
+     * 主题: 邮箱激活
+     */
+    String TOPIC_REGISTER = "register";
+
+    /**
      * 系统用户ID
      */
     int SYSTEM_USER_ID = 1;

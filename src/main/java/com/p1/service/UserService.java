@@ -3,14 +3,16 @@ package com.p1.service;
 import com.p1.dao.UserDao;
 import com.p1.pojo.LoginTicket;
 import com.p1.pojo.User;
-import com.p1.util.*;
+import com.p1.util.CommunityConstant;
+import com.p1.util.CommunityUtil;
+import com.p1.util.MailClient;
+import com.p1.util.RedisKeyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -87,21 +89,7 @@ public class UserService implements CommunityConstant {
         user.setCreateTime(new Date());
         userDao.insertUser(user);
 
-        // 激活邮件
-        Context context = new Context();
-        //传用户名
-        context.setVariable("username",user.getUsername());
-        //传邮箱
-        context.setVariable("email", user.getEmail());
-        //传日期，注意要改格式
-        context.setVariable("creatTime", DateUtil.date2String(user.getCreateTime(),"yyyy-MM-dd HH:mm:ss"));
-        // http://localhost:8080/activation/101/code
-        String url = domain + "/activation/" + user.getId() + "/" + user.getActivationCode();
-        //传url
-        context.setVariable("url", url);
 
-        String content = templateEngine.process("/mail/activation", context);
-        mailClient.sendMail(user.getEmail(), "激活账号", content);
     }
 
     //是否激活
