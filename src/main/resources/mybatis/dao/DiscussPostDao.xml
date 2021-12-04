@@ -18,7 +18,12 @@
         <if test="userId!=0">
             and userId = #{userId}
         </if>
-        order by type desc, createTime desc
+        <if test="orderMode==0">
+            order by type desc, createTime desc
+        </if>
+        <if test="orderMode==1">
+            order by type desc, score desc, createTime desc
+        </if>
         limit #{offset}, #{limit}
     </select>
 

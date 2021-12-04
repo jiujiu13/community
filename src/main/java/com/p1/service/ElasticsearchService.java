@@ -35,7 +35,7 @@ public class ElasticsearchService {
         discussPostRepository.save(discussPost);
     }
 
-    public void delete(int id) {
+    public void deleteDiscussPost(int id) {
         discussPostRepository.deleteById(id);
     }
 

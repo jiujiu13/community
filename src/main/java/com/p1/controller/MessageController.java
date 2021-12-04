@@ -1,7 +1,6 @@
 package com.p1.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.p1.annotation.LoginRequired;
 import com.p1.annotation.MessageRequired;
 import com.p1.pojo.Message;
 import com.p1.pojo.Page;
@@ -76,7 +75,6 @@ public class MessageController implements CommunityConstant {
     }
 
     @MessageRequired
-    @LoginRequired
     @RequestMapping(path = "/letter/detail/{conversationId}", method = RequestMethod.GET)
     public String getLetterDetail(@PathVariable("conversationId") String conversationId, Page page, Model model) {
         // 分页信息
@@ -106,7 +104,7 @@ public class MessageController implements CommunityConstant {
         if (!ids.isEmpty()) {
             messageService.readMessage(ids);
         }
-          return "/site/letter-detail";
+        return "/site/letter-detail";
     }
 
     private User getLetterTarget(String conversationId) {
@@ -162,11 +160,11 @@ public class MessageController implements CommunityConstant {
     //在删除私信前判断删除的私信是否是本人发的
     @RequestMapping(path = "/letter/judge/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String judge(@PathVariable("id") int id){
+    public String judge(@PathVariable("id") int id) {
         Message message = messageService.findById(id);
-        if(message.getToId()==hostHolder.getUser().getId()){
+        if (message.getToId() == hostHolder.getUser().getId()) {
             return CommunityUtil.getJSONString(1);
-        }else {
+        } else {
             //发信人是本人
             return CommunityUtil.getJSONString(0);
         }
@@ -176,10 +174,10 @@ public class MessageController implements CommunityConstant {
     //删除私信
     @RequestMapping(path = "/letter/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String deleteMessage(@PathVariable("id") int id){
+    public String deleteMessage(@PathVariable("id") int id) {
 
-            messageService.deleteMessage(id);
-            return CommunityUtil.getJSONString(0);
+        messageService.deleteMessage(id);
+        return CommunityUtil.getJSONString(0);
 
     }
 
@@ -193,6 +191,7 @@ public class MessageController implements CommunityConstant {
         if (message != null) {
             Map<String, Object> messageVO = new HashMap<>();
             messageVO.put("message", message);
+
 
             //反转义json，把数据库中的&quot转为“
             String content = HtmlUtils.htmlUnescape(message.getContent());

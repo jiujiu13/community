@@ -8,18 +8,17 @@ import com.p1.pojo.User;
 import com.p1.service.UserService;
 import com.p1.util.CommunityConstant;
 import com.p1.util.CommunityUtil;
+import com.p1.util.HostHolder;
 import com.p1.util.RedisKeyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
@@ -50,6 +49,9 @@ public class LoginController extends BaseController implements CommunityConstant
     @Autowired
     private EventProducer eventProducer;
 
+    @Autowired
+    private HostHolder hostHolder;
+
     //注册提交
     @RequestMapping("/signUp")
     public String Register(User user) {
@@ -76,6 +78,17 @@ public class LoginController extends BaseController implements CommunityConstant
         eventProducer.fireEvent(event);
 
         return "/site/register-ok";
+    }
+
+    //修改密码
+    @PostMapping("/updatePassword")
+    public String updatePassword(@RequestParam("new-password") String newPassword, @CookieValue("ticket") String ticket){
+        User user = hostHolder.getUser();
+        newPassword=CommunityUtil.md5(newPassword+user.getSalt());
+        userDao.updatePassword(user.getId(), newPassword);
+        userService.cancel(ticket);
+        SecurityContextHolder.clearContext();
+        return "/login";
     }
 
     //用户打开邮件链接
@@ -163,10 +176,10 @@ public class LoginController extends BaseController implements CommunityConstant
     }
 
     //注销
-    @RequestMapping(path = "/cancel", method = RequestMethod.GET)
+    @GetMapping("/cancel")
     public String logout(@CookieValue("ticket") String ticket) {
         userService.cancel(ticket);
-//        SecurityContextHolder.clearContext();
+        SecurityContextHolder.clearContext();
         return "redirect:/go.html";
     }
 }

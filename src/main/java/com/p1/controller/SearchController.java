@@ -33,7 +33,7 @@ public class SearchController implements CommunityConstant {
     //   /search?keyword=
     @RequestMapping(path="/search",method = RequestMethod.GET)
     public String search(String keyword, Page page, Model model) throws IOException {
-        //分页信息1
+        //分页信息
         page.setLimit(5);
         page.setPath("/search?keyword="+keyword);
         page.setRows((int) elasticsearchService.findCountByKeyword(keyword));//找所有带有关键字的帖子数量

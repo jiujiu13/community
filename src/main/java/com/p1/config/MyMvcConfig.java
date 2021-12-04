@@ -1,9 +1,6 @@
 package com.p1.config;
 
-import com.p1.controller.interceptor.LoginRequiredInterceptor;
-import com.p1.controller.interceptor.LoginTicketInterceptor;
-import com.p1.controller.interceptor.MessageRequiredInterceptor;
-import com.p1.controller.interceptor.NewNoticeInterceptor;
+import com.p1.controller.interceptor.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -24,6 +21,9 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private NewNoticeInterceptor newNoticeInterceptor;
+
+    @Autowired
+    private DataInterceptor dataInterceptor;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -65,6 +65,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
         //新通知未读消息
         registry.addInterceptor(newNoticeInterceptor)
+                .excludePathPatterns("/css/**","/fonts/**","/img/**","/js/**","/vendor/**");
+
+        //记录日活等
+        registry.addInterceptor(dataInterceptor)
                 .excludePathPatterns("/css/**","/fonts/**","/img/**","/js/**","/vendor/**");
     }
 }

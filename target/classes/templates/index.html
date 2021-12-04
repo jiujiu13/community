@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>lsyy论坛</title>
+    <!--访问该页面时,在此处生成CSRF令牌.-->
+<!--    <meta name="_csrf" th:content="${_csrf.token}">-->
+<!--    <meta name="_csrf_header" th:content="${_csrf.headerName}">-->
+
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -42,12 +46,12 @@
         <div class="container-fluid px-xl-5">
             <section class="py-5">
                 <div class="row">
-                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0"  >
+                    <div class="col-xl-3 col-lg-6 mb-4 mb-xl-0">
                         <div class=" shadow roundy p-4 h-100 d-flex align-items-center justify-content-between">
                             <div class="flex-grow-1 d-flex align-items-center">
                                 <div class="dot mr-3 bg-blue"></div>
                                 <div class="text">
-                                    <a class="mb-0" href="#" >最新发布</a><br><span class="text-gray"></span>
+                                    <a class="mb-0" th:href="@{/index(orderMode=0)}">最新发布</a><br><span class="text-gray"></span>
                                 </div>
                             </div>
                             <div class="icon text-white bg-blue"><i class="fa fa-dolly-flatbed"></i></div>
@@ -59,7 +63,8 @@
                             <div class="flex-grow-1 d-flex align-items-center">
                                 <div class="dot mr-3 bg-red"></div>
                                 <div class="text">
-                                    <a class="mb-0" href="#" style="color:red;">最热发布</a><br><span class="text-gray"></span>
+                                    <a class="mb-0" th:href="@{/index(orderMode=1)}" style="color:red;">最热发布</a><br><span
+                                        class="text-gray"></span>
                                 </div>
                             </div>
                             <div class="icon text-white bg-red"><i class="fas fa-receipt"></i></div>
@@ -68,10 +73,10 @@
                 </div>
             </section>
             <section>
-                <div class="row mb-4" style="width: 2700px" >
-                    <div class="col-lg-7 mb-4 mb-lg-0"  >
-                        <div >
-                            <div >
+                <div class="row mb-4" style="width: 2700px">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <div>
+                            <div>
                                 <button type="button" class="btn btn-primary btn-sm  rt-0" data-toggle="modal"
                                         data-target="#publishModal" style="float: right" th:if="${loginUser!=null}">我要发布
                                 </button>
@@ -136,21 +141,24 @@
                                 <li class="media pb-3 pt-3 mb-3 border-bottom" th:each="map:${discussPosts}">
                                     <a th:href="@{|/user/profile/${map.user.id}|}">
 
-                                        <img th:src="${map.user.headerUrl}" class="mr-4 rounded-circle" alt="用户头像"
+                                        <img  th:src="${map.user.headerUrl}"  class="mr-4 rounded-circle" alt="用户头像"
                                              style="width:50px;height:50px;">
                                     </a>
                                     <div class="media-body">
                                         <h6 class="mt-0 mb-3">
-                                            <a th:href="@{|/discuss/detail/${map.post.id}|}" th:utext="${map.post.title}">备战春招，面试刷题跟他复习，一个月全搞定！</a>
+                                            <a th:href="@{|/discuss/detail/${map.post.id}|}"
+                                               th:utext="${map.post.title}">备战春招，面试刷题跟他复习，一个月全搞定！</a>
                                             <span class="badge badge-secondary bg-primary" th:if="${map.post.type==1}">置顶</span>
                                             <span class="badge badge-secondary bg-danger" th:if="${map.post.status==1}">精华</span>
                                         </h6>
                                         <div class="text-muted font-size-12">
-                                            <u class="mr-3" th:utext="${map.user.username}" style="color: #6c757d;font-weight: bold" >寒江雪</u> 发布于 <b
+                                            <u class="mr-3" th:utext="${map.user.username}"
+                                               style="color: #6c757d;font-weight: bold">寒江雪</u> 发布于 <b
                                                 th:text="${#dates.format(map.post.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15
                                             15:32:18</b>
                                             <ul class="d-inline float-right">
-                                                <li class="d-inline ml-2">赞 <span th:text="${map.likeCount}">566</span></li>
+                                                <li class="d-inline ml-2">赞 <span th:text="${map.likeCount}">566</span>
+                                                </li>
                                                 <li class="d-inline ml-2">|</li>
                                                 <li class="d-inline ml-2">回帖 <span
                                                         th:text="${map.post.commentCount}">7</span></li>
@@ -192,8 +200,9 @@
         <script src="js/js.cookie.min.js"></script>
         <script src="js/charts-home.js"></script>
         <script src="js/front.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-<!--        <script src="js/notice.js"></script>-->
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                crossorigin="anonymous"></script>
+        <!--        <script src="js/notice.js"></script>-->
 
         <script>
             $(function () {
@@ -202,7 +211,7 @@
                     var title = $("#recipient-name").val();
                     var content = $("#message-text").val();
                     // 发送异步请求(POST)
-                    if(!title.trim()=="") {
+                    if (!title.trim() == "") {
                         $.post("/discuss/add", {"title": title, "content": content}, function (data) {
 
                                 // 在提示框中显示返回消息
@@ -212,10 +221,12 @@
                                 // 2秒后,自动隐藏提示框
                                 setTimeout(function () {
                                     location.href = "/go.html";
-                                }, 2000);
+                                }, 500);
                             }
                         );
-                    }else{alert("请写标题");}
+                    } else {
+                        alert("请写标题");
+                    }
                 });
             });
         </script>

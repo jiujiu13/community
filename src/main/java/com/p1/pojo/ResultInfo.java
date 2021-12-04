@@ -1,7 +1,5 @@
 package com.p1.pojo;
 
-import org.springframework.stereotype.Service;
-
 import java.io.Serializable;
 
 public class ResultInfo implements Serializable {

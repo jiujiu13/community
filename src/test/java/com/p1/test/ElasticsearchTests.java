@@ -55,9 +55,9 @@ public class ElasticsearchTests {
     @Test
     public void testInsertList() {
         //把用户发的前100条帖子（List<DiscussPost>）存入es的discusspost索引（es的索引相当于数据库的表）
-        discussRepository.saveAll(discussPostDao.selectDiscussPosts(150, 0, 100));
-        discussRepository.saveAll(discussPostDao.selectDiscussPosts(151, 0, 100));
-        discussRepository.saveAll(discussPostDao.selectDiscussPosts(152, 0, 100));
+        discussRepository.saveAll(discussPostDao.selectDiscussPosts(150, 0, 100,0));
+        discussRepository.saveAll(discussPostDao.selectDiscussPosts(151, 0, 100,0));
+        discussRepository.saveAll(discussPostDao.selectDiscussPosts(152, 0, 100,0));
     }
 
     //带高亮的查询

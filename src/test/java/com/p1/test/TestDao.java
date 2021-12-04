@@ -10,6 +10,7 @@ import com.p1.pojo.DiscussPost;
 import com.p1.pojo.LoginTicket;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootVersion;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -42,7 +43,7 @@ public class TestDao {
 
     @Test
     public void test2(){
-        List<DiscussPost> discussPosts = discussPostDao.selectDiscussPosts(101, 0, 10);
+        List<DiscussPost> discussPosts = discussPostDao.selectDiscussPosts(101, 0, 10,0);
         for (DiscussPost discussPost : discussPosts) {
             System.out.println(discussPost);
         }
@@ -79,5 +80,11 @@ public class TestDao {
         for (Comment comment : comments) {
             System.out.println(comment);
         }
+    }
+    @Test
+    public void t(){
+        String version1 = SpringBootVersion.getVersion();
+
+        System.out.println(version1);
     }
 }

@@ -10,10 +10,7 @@ import com.p1.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,15 +37,15 @@ public class HomeController implements CommunityConstant {
     private HostHolder hostHolder;
 
     @GetMapping("/index")
-    public String getIndexPage(Model model, Page page) {
+    public String getIndexPage(Model model, Page page, @RequestParam(name="orderMode",defaultValue = "0") int orderMode) {
 
         //不用model.addAttribute("page", page);model自动就有page
         page.setRows(discussPostService.findDiscussPostRows(0));
-        page.setPath("/index");
+        page.setPath("/index?orderMode="+orderMode);
 
 
 
-        List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffset(),page.getLimit());
+        List<DiscussPost> list = discussPostService.findDiscussPosts(0, page.getOffset(),page.getLimit(),orderMode);
         List<Map<String, Object>> discussPosts = new ArrayList<>();
         if (list != null) {
             for (DiscussPost post : list) {
@@ -65,6 +62,7 @@ public class HomeController implements CommunityConstant {
             }
         }
         model.addAttribute("discussPosts", discussPosts);
+        model.addAttribute("orderMode", orderMode);
 
         return "/index";
     }
@@ -87,7 +85,7 @@ public class HomeController implements CommunityConstant {
         User u = userService.findUserById(userId);
         model.addAttribute("u",u);
 
-        List<DiscussPost> list = discussPostService.findDiscussPosts(userId, page.getOffset(),page.getLimit());
+        List<DiscussPost> list = discussPostService.findDiscussPosts(userId, page.getOffset(),page.getLimit(),0);
         List<Map<String, Object>> discussPosts = new ArrayList<>();
         if (list != null) {
             for (DiscussPost post : list) {
@@ -153,6 +151,15 @@ public class HomeController implements CommunityConstant {
         model.addAttribute("comments", comments);
 
         return "/site/user-comment";
+    }
+
+    @GetMapping("/deneid")
+    public String getDeniedpage(){
+        return "/error/404";
+    }
+    @GetMapping("/pleaselogin")
+    public String getLoginpage(){
+        return "/error/please-login";
     }
 
     //用拦截器实现此功能了
